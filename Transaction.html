@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ACC 29 - Final Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #container {
+            display: flex;
+            width: 100%;
+            margin-top: 20px;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+
+        #transactionForm {
+            flex: 1;
+            max-width: 300px;
+            padding: 8px;
+            margin-right: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 6px;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 8px;
+            font-size: 14px;
+            width: 50%;
+            margin: 0 1% 10px;
+            box-sizing: border-box;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #journalEntry,
+        #ledger,
+        #trialbalance,
+        #financialstatement{
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            margin-top: 5px;
+            padding-top: 5px;
+        }
+
+        .contentBox {
+            margin-top: 20px;
+            padding: 8px;
+            position: relative;
+            z-index: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 8px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ccc;
+            padding: 2px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th:nth-child(1),
+        td:nth-child(1),
+        th:nth-child(2),
+        td:nth-child(2),
+        th:nth-child(3),
+        td:nth-child(3),
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 25%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="transactionForm">
+            <h2>Welcome</h2>
+            <label for="transactionDate">Transaction Date:</label>
+            <input type="date" id="transactionDate" name="transactionDate">
+
+            <label for="debitAccount">Select where to debit:</label>
+            <select id="debitAccount" name="debitAccount">
+                <option value="Cash on Hand">Cash on hand</option>
+                <option value="Cash in Bank">Cash in bank</option>
+                <option value="Petty Cash">Petty cash</option>
+                <option value="Notes Receivable">Notes receivable</option>
+                <option value="Accounts Receivable">Accounts receivable</option>
+                <option value="Interest Receivable">Interest receivable</option>
+                <option value="Prepaid Expense">Prepaid expense</option>
+                <option value="Unused Supplies">Unused supplies</option>
+                <option value="Land">Land</option>
+                <option value="Building">Building</option>
+                <option value="Equipment">Equipment</option>
+                <option value="Furniture and Fixtures">Furniture and fixtures</option>
+                <option value="Tools">Tools</option>
+                <option value="Accumulated Depreciation-Bldg.">Accumulated Depreciation - Bldg.</option>
+                <option value="Accumulated Depreciation-Equip">Accumulated Depreciation - Equip</option>
+                <option value="Accumulated Depreciation-FF">Accumulated Depreciation - FF</option>
+                <option value="Unearned Income">Unearned income</option>
+                <option value="Accrued Expenses">Accrued expenses</option>
+                <option value="Notes Payable">Notes payable</option>
+                <option value="Accounts Payable">Accounts payable</option>
+                <option value="Capital">Capital</option>
+                <option value="Drawing">Drawing</option>
+                <option value="Service Income">Service income</option>
+                <option value="Rent Income">Rent income</option>
+                <option value="Interest Income">Interest income</option>
+                <option value="Commission Income">Commission income</option>
+                <option value="Salary Expense">Salary Expense</option>
+                <option value="Advertising Expense">Advertising Expense</option>
+                <option value="Depreciation Expense">Depreciation Expense</option>
+                <option value="Commission Expense">Commission Expense</option>
+                <option value="Rent Expense">Rent Expense</option>
+                <option value="Taxes and Licenses Expense">Taxes and Licenses Expense</option>
+                <option value="Communication Expense">Communication Expense</option>
+                <option value="Delivery Expense">Delivery Expense</option>
+                <option value="Doubtful Accounts Expense">Doubtful Accounts Expense</option>
+                <option value="Supplies Expense">Supplies Expense</option>
+                <option value="Insurance Expense">Insurance Expense</option>
+                <option value="Utilities Expense">Utilities Expense</option>
+                <option value="Repair and Maintenance Expense">Repair and Maintenance Expense</option>
+                <option value="Interest Expense">Interest Expense</option>
+            </select>
+
+            <label for="debitAmount">Debit Amount:</label>
+            <input type="number" id="debitAmount" name="debitAmount" step="0.01">
+
+            <label for="creditAccount">Select where to credit:</label>
+            <select id="creditAccount" name="creditAccount">
+                <option value="Cash on Hand">Cash on hand</option>
+                <option value="Cash in Bank">Cash in bank</option>
+                <option value="Petty Cash">Petty cash</option>
+                <option value="Notes Receivable">Notes receivable</option>
+                <option value="Accounts Receivable">Accounts receivable</option>
+                <option value="Interest Receivable">Interest receivable</option>
+                <option value="Prepaid Expense">Prepaid expense</option>
+                <option value="Unused Supplies">Unused supplies</option>
+                <option value="Land">Land</option>
+                <option value="Building">Building</option>
+                <option value="Equipment">Equipment</option>
+                <option value="Furniture and Fixtures">Furniture and fixtures</option>
+                <option value="Tools">Tools</option>
+                <option value="Accumulated Depreciation-Bldg.">Accumulated Depreciation - Bldg.</option>
+                <option value="Accumulated Depreciation-Equip.">Accumulated Depreciation - Equip</option>
+                <option value="Accumulated Depreciation-FF">Accumulated Depreciation - FF</option>
+                <option value="Unearned Income">Unearned income</option>
+                <option value="Accrued Expenses">Accrued expenses</option>
+                <option value="Notes Payable">Notes payable</option>
+                <option value="Accounts Payable">Accounts payable</option>
+                <option value="Capital">Capital</option>
+                <option value="Drawing">Drawing</option>
+                <option value="Service Income">Service income</option>
+                <option value="Rent Income">Rent income</option>
+                <option value="Interest Income">Interest income</option>
+                <option value="Commission Income">Commission income</option>
+                <option value="Salary Expense">Salary Expense</option>
+                <option value="Advertising Expense">Advertising Expense</option>
+                <option value="Depreciation Expense">Depreciation Expense</option>
+                <option value="Commission Expense">Commission Expense</option>
+                <option value="Rent Expense">Rent Expense</option>
+                <option value="Taxes and Licenses Expense">Taxes and Licenses Expense</option>
+                <option value="Communication Expense">Communication Expense</option>
+                <option value="Delivery Expense">Delivery Expense</option>
+                <option value="Doubtful Accounts Expense">Doubtful Accounts Expense</option>
+                <option value="Supplies Expense">Supplies Expense</option>
+                <option value="Insurance Expense">Insurance Expense</option>
+                <option value="Utilities Expense">Utilities Expense</option>
+                <option value="Repair and Maintenance Expense">Repair and Maintenance Expense</option>
+                <option value="Interest Expense">Interest Expense</option>
+            </select>
+
+            <label for="creditAmount">Credit Amount:</label>
+            <input type="number" id="creditAmount" name="creditAmount" step="0.01">
+
+            <button id="addButton" type="button" onclick="addTransaction()">Add</button>
+            <button id="showTrialBalanceButton" type="button" onclick="showTrialBalance()">Show Trial Balance</button>
+            <button id="showFinancialStatementsButton" type="button" onclick="showFinancialStatements()">Show Financial Statements</button>
+        </div>
+
+        <div id="journalEntry" class="contentBox">
+            <h2>Journal Entries</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Account Titles</th>
+                        <th>Debit Amount</th>
+                        <th>Credit Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="journalEntryText">
+                </tbody>
+            </table>
+        </div>
+
+        <div id="ledger" class="contentBox">
+            <h2>Ledgers</h2>
+            <div id="ledgerContent">
+
+            </div>
+        </div>
+
+        <div id="trialbalance" class="contentBox">
+            <h2>Trial Balance</h2>
+            <div id="trialContent">
+        
+            </div>
+        </div>
+
+        <div id="financialstatement" class="contentBox">
+            <h2>Financial Statements</h2>
+            <div id="financialStatementsContent">
+
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var ledgerData = {};
+
+        var debitAmountInput = document.getElementById("debitAmount");
+        var creditAmountInput = document.getElementById("creditAmount");
+
+        debitAmountInput.addEventListener("input", function () {
+            var debitAmount = parseInt(debitAmountInput.value) || 0;
+            var creditAmount = calculateCreditAmount(debitAmount);
+            creditAmountInput.value = creditAmount;
+        });
+
+        function addTransaction() {
+            var transactionDate = document.getElementById("transactionDate").value;
+            var debitAccount = document.getElementById("debitAccount").value;
+            var debitAmount = parseInt(document.getElementById("debitAmount").value);
+            var creditAccount = document.getElementById("creditAccount").value;
+            var creditAmount = calculateCreditAmount(debitAmount);
+
+            var journalEntryText = "<tr>";
+            journalEntryText += "<td>" + transactionDate + "</td>";
+            journalEntryText += "<td>" + debitAccount + "</td>";
+            journalEntryText += "<td style='text-align: right;'>" + debitAmount + "</td>";
+            journalEntryText += "<td></td>";
+            journalEntryText += "</tr>";
+
+            journalEntryText += "<tr>";
+            journalEntryText += "<td></td>";
+            journalEntryText += "<td>" + creditAccount + "</td>";
+            journalEntryText += "<td></td>";
+            journalEntryText += "<td style='text-align: right;'>" + creditAmount + "</td>";
+            journalEntryText += "</tr>";
+
+            var tableBody = document.getElementById("journalEntryText");
+            tableBody.innerHTML += journalEntryText;
+
+            updateLedgerData(transactionDate, debitAccount, debitAmount, creditAccount, creditAmount);
+            showLedger();
+
+            document.getElementById("journalEntry").style.display = "block";
+            document.getElementById("trialbalance").style.display = "none";
+            document.getElementById("showTrialBalanceButton").textContent = "Show Trial Balance";
+        }
+
+        function calculateCreditAmount(debitAmount) {
+            return debitAmount;
+        }
+
+        function updateLedgerData(transactionDate, debitAccount, debitAmount, creditAccount, creditAmount) {
+            if (!ledgerData[debitAccount]) {
+                ledgerData[debitAccount] = { transactions: [] };
+            }
+            if (!ledgerData[creditAccount]) {
+                ledgerData[creditAccount] = { transactions: [] };
+            }
+
+            var debitTransaction = {
+                date: transactionDate,
+                debitAmount: debitAmount,
+                creditAmount: 0
+            };
+
+            var creditTransaction = {
+                date: creditAccount !== debitAccount ? transactionDate : '',
+                debitAmount: 0,
+                creditAmount: creditAmount
+            };
+
+            ledgerData[debitAccount].transactions.push(debitTransaction);
+            ledgerData[creditAccount].transactions.push(creditTransaction);
+
+            showLedger();
+        }
+
+        function showLedger() {
+            var ledgerContent = document.getElementById("ledgerContent");
+            ledgerContent.innerHTML = "";
+
+            var assetCategories = ['Cash on Hand', 'Cash in Bank', 'Petty Cash', 'Notes Receivable', 'Accounts Receivable',
+                'Interest Receivable', 'Prepaid Expense', 'Unused Supplies', 'Land', 'Building',
+                'Equipment', 'Furniture and Fixtures', 'Tools', 'Accumulated Depreciation-Bldg.' , 'Accumulated Depreciation-Equip.',
+                'Accumulated Depreciation-FF'];
+            var liabilityCategories = ['Unearned Income', 'Accrued Expenses', 'Notes Payable', 'Accounts Payable'];
+            var capitalCategories = ['Capital', 'Drawing'];
+            var revenueCategories = ['Service Income', 'Rent Income', 'Interest Income', 'Commission Income'];
+            var expenseCategories = ['Salary Expense', 'Advertising Expense', 'Depreciation Expense', 'Commission Expense',
+                'Rent Expense', 'Taxes and Licenses Expense', 'Communication Expense', 'Delivery Expense', 'Doubtful Accounts Expense',
+                'Supplies Expense', 'Insurance Expense', 'Utilities Expense', 'Repair and Maintenance Expense', 'Interest Expense'];
+
+            var categories = [assetCategories, liabilityCategories, capitalCategories, revenueCategories, expenseCategories];
+
+            for (var i = 0; i < categories.length; i++) {
+                var category = categories[i];
+
+                for (var j = 0; j < category.length; j++) {
+                    var accountTitle = category[j];
+                    var accountData = ledgerData[accountTitle];
+
+                    if (accountData) {
+                        var totalDebit = 0;
+                        var totalCredit = 0;
+
+                        for (var k = 0; k < accountData.transactions.length; k++) {
+                            totalDebit += accountData.transactions[k].debitAmount;
+                            totalCredit += accountData.transactions[k].creditAmount;
+                        }
+
+                        var ledgerEntry = "<h4 style='margin-bottom: 5px;'>" + accountTitle + "</h4>";
+                        ledgerEntry += "<table>";
+                        ledgerEntry += "<tr><td>Debit</td>";
+                        ledgerEntry += "<td>Credit</td>";
+                        ledgerEntry += "</tr><tr>";
+                        ledgerEntry += "<td style='text-align: right;'>" + totalDebit
+                            + "</td><td style='text-align: right;'>"+ totalCredit + "</td></tr>";
+
+                        if (totalDebit > totalCredit){
+                            var result = totalDebit - totalCredit;
+                            ledgerEntry += "<tr><td style='text-align: right;'><b>" + result + "</b></td><td></td></tr>";
+                        }
+                        if (totalCredit > totalDebit){
+                            var result = totalCredit - totalDebit;
+                            ledgerEntry += "<tr><td></td><td style='text-align: right;'><b>" + result + "</b></td></tr>";
+                        }
+
+                        ledgerEntry += "</table>";
+
+                        ledgerContent.innerHTML += ledgerEntry;
+                    }
+                }
+            }
+            document.getElementById("ledger").style.display = "block";
+            document.getElementById("trialbalance").style.display = "none";
+            document.getElementById("showTrialBalanceButton").textContent = "Show Trial Balance";
+        }
+
+        var trialBalanceVisible = false;
+        var financialStatementsVisible = false;
+
+        function showTrialBalance() {
+            var trialContent = document.getElementById("trialContent");
+            trialContent.innerHTML = "";
+
+            trialBalanceVisible = !trialBalanceVisible;
+
+            if (trialBalanceVisible) {
+                var orderedCategories = [
+                    { category: 'Assets', order: ['Cash on Hand', 'Cash in Bank', 'Petty Cash', 'Notes Receivable', 'Accounts Receivable',
+                        'Interest Receivable', 'Prepaid Expense', 'Unused Supplies', 'Land', 'Building', 'Equipment', 'Furniture and Fixtures',
+                        'Tools', 'Accumulated Depreciation-Bldg.', 'Accumulated Depreciation-Equip.', 'Accumulated Depreciation-FF'] },
+                    { category: 'Liabilities', order: ['Unearned Income', 'Accrued Expenses', 'Notes Payable', 'Accounts Payable'] },
+                    { category: 'Capital', order: ['Capital', 'Drawing'] },
+                    { category: 'Revenue', order: ['Service Income', 'Rent Income', 'Interest Income', 'Commission Income'] },
+                    { category: 'Expense', order: ['Salary Expense', 'Advertising Expense', 'Depreciation Expense', 'Commission Expense',
+                        'Rent Expense', 'Taxes and Licenses Expense', 'Communication Expense', 'Delivery Expense', 'Doubtful Accounts Expense',
+                        'Supplies Expense', 'Insurance Expense', 'Utilities Expense', 'Repair and Maintenance Expense', 'Interest Expense'] }
+                ];
+
+                var trialEntry = "<table>";
+                trialEntry += "<tr><td>Account Titles</td><td>Debit</td><td>Credit</td></tr>";
+
+                var totalDebit = 0;
+                var totalCredit = 0;
+
+                for (var i = 0; i < orderedCategories.length; i++) {
+                    var category = orderedCategories[i];
+
+                    for (var j = 0; j < category.order.length; j++) {
+                        var accountTitle = category.order[j];
+                        var accountData = ledgerData[accountTitle];
+
+                        if (accountData) {
+                            var accountTotalDebit = 0;
+                            var accountTotalCredit = 0;
+
+                            for (var k = 0; k < accountData.transactions.length; k++) {
+                                accountTotalDebit += accountData.transactions[k].debitAmount;
+                                accountTotalCredit += accountData.transactions[k].creditAmount;
+                            }
+
+                            var netResult = accountTotalDebit - accountTotalCredit;
+                            if (netResult > 0) {
+                                trialEntry += "<tr><td>" + accountTitle + "</td><td style='text-align: right;'>"
+                                    + netResult + "</td><td></td></tr>";
+                            } else if (netResult < 0) {
+                                trialEntry += "<tr><td>" + accountTitle + "</td><td></td><td style='text-align: right;'>"
+                                    + Math.abs(netResult) + "</td></tr>";
+                            }
+
+                            totalDebit += netResult > 0 ? netResult : 0;
+                            totalCredit += netResult < 0 ? Math.abs(netResult) : 0;
+                        }
+                    }
+                }
+
+                trialEntry += "<tr><td></td><td style='text-align: right;'><b>" + totalDebit
+                    + "</b></td><td style='text-align: right;'><b>" + totalCredit + "</b></td></tr>";
+
+                trialEntry += "</table>";
+                trialContent.innerHTML = trialEntry;
+
+                document.getElementById("trialbalance").style.display = "block";
+                document.getElementById("journalEntry").style.display = "none";
+                document.getElementById("ledger").style.display = "none";
+                document.getElementById("showTrialBalanceButton").textContent = "Hide Trial Balance";
+            }
+            else {
+                document.getElementById("trialbalance").style.display = "none";
+                document.getElementById("journalEntry").style.display = "block";
+                document.getElementById("ledger").style.display = "block";
+                document.getElementById("showTrialBalanceButton").textContent = "Show Trial Balance";
+            }
+        }
+
+        var currentAccounts = ['Cash on Hand', 'Cash in Bank', 'Accounts Receivable', 'Petty Cash', 'Notes Receivable',
+            'Interest Receivable', 'Prepaid Expenses', 'Unused Supplies']
+        var noncurrentAccounts = ['Land', 'Building', 'Accumulated Depreciation-Bldg.',
+                'Equipment', 'Accumulated Depreciation-Equip.', 'Furniture and Fixtures', 'Accumulated Depreciation-FF', 'Tools']
+        var liabilitiesAccounts = ['Unearned Income', 'Accrued Expenses', 'Notes Payable', 'Accounts Payable']
+        var capitalAccounts = ['Capital', 'Drawing']
+        var revenueAccounts = ['Service Income', 'Rent Income', 'Interest Income', 'Commission Income'];
+        var expenseAccounts = ['Salary Expense', 'Advertising Expense', 'Depreciation Expense', 'Commission Expense',
+                                'Rent Expense', 'Taxes and Licenses Expense', 'Communication Expense', 'Delivery Expense',
+                                'Doubtful Accounts Expense', 'Supplies Expense', 'Insurance Expense', 'Utilities Expense',
+                                'Repair and Maintenance Expense', 'Interest Expense'];
+
+        var balanceSheetContent = "";
+        var financialStatementsVisible = false;
+        var netIncome;
+        var totalCurrent = 0;
+        var totalLiabilities = 0;
+        var totalRevenue;
+        var totalExpenses = 0;
+
+        function getCategory(accountTitle) {
+            if (accountTitle.toLowerCase().includes('asset')) {
+                return 'Assets';
+            }
+            if (accountTitle.toLowerCase().includes('liability')) {
+                return 'Liabilities';
+            }
+            if (accountTitle.toLowerCase().includes('capital')) {
+                return 'Capital';
+            }
+            if (revenueAccounts.includes(accountTitle)) {
+                return 'Revenue';
+            }
+            if (expenseAccounts.includes(accountTitle)) {
+                return 'Expense';
+            }
+            return 'Other';
+        }
+
+        function calculateTotalAmount(transactions, accountTitle) {
+            return transactions.reduce(function (total, transaction) {
+                var debitAmount = transaction.debitAmount || 0;
+                var creditAmount = transaction.creditAmount || 0;
+
+                total += debitAmount;
+                total -= creditAmount;
+
+                return total;
+            }, 0);
+        }
+
+        function generateBalanceSheet() {
+            var financialStatementsContent = document.getElementById("financialStatementsContent");
+            financialStatementsContent.innerHTML = "";
+            var balanceSheetContent = "<h2>Balance Sheet</h2>";
+            balanceSheetContent += "<table>";
+
+            totalCurrent = 0;
+            totalNoncurrent = 0;
+
+            balanceSheetContent += "<tr><td style='text-align: left;'>Current Asset</td><td></td><td></td><td></td></tr>";
+            for (var i = 0; i < currentAccounts.length; i++) {
+                var accountTitle = currentAccounts[i];
+                var accountData = ledgerData[accountTitle];
+
+                if (accountData) {
+                    var totalAmount = calculateTotalAmount(accountData.transactions, accountTitle);
+                    balanceSheetContent += "<tr><td>" + accountTitle + "</td><td style='text-align: right;'>" +
+                        (totalAmount < 0 ? Math.abs(totalAmount) : totalAmount) + "</td><td></td><td></td></tr>";
+
+                    totalCurrent += totalAmount;
+                }
+            }
+            balanceSheetContent += "<tr><td style='text-align: left;'>Total Current Asset</td><td></td><td style='text-align: right;'>" +
+                (Math.abs(totalCurrent)) + "</td><td></td></tr>";
+
+            balanceSheetContent += "<tr><td style='text-align: left;'>Non Current Asset</td><td></td><td></td><td></td></tr>";
+            for (var i = 0; i < noncurrentAccounts.length; i++) {
+                var accountTitle = noncurrentAccounts[i];
+                var accountData = ledgerData[accountTitle];
+
+                if (accountData) {
+                    var totalAmount = calculateTotalAmount(accountData.transactions, accountTitle);
+                    balanceSheetContent += "<tr><td>" + accountTitle + "</td><td style='text-align: right;'>" +
+                        (totalAmount < 0 ? Math.abs(totalAmount) : totalAmount) + "</td><td></td><td></td></tr>";
+
+                    totalNoncurrent += totalAmount;
+                }
+            }
+            balanceSheetContent += "<tr><td style='text-align: left;'>Total Non Current Asset</td><td></td><td style='text-align: right;'>"
+                + (totalNoncurrent < 0 ? Math.abs(totalNoncurrent) : totalNoncurrent) + "</td><td></td></tr>";
+
+            var totalAssets = totalCurrent + totalNoncurrent;
+
+            balanceSheetContent += "<tr><td style='text-align: left;'><b>Total Assets</b></td><td></td><td></td>" 
+                + "<td style='text-align: right;'><b>" + Math.abs(totalAssets) + "</b></td></tr>";
+
+            balanceSheetContent += "<tr><td style='text-align: left;'>Liabilities</td><td></td><td></td><td></td></tr>";
+            for (var i = 0; i < liabilitiesAccounts.length; i++) {
+                var accountTitle = liabilitiesAccounts[i];
+                var accountData = ledgerData[accountTitle];
+
+                if (accountData) {
+                    var totalAmount = calculateTotalAmount(accountData.transactions, accountTitle);
+
+                    if (accountTitle.toLowerCase().includes('accumulated depreciation')) {
+                        totalLiabilities -= totalAmount;
+                    } else {
+                        balanceSheetContent += "<tr><td>" + accountTitle + "</td><td style='text-align: right;'>" +
+                            (totalAmount < 0 ? Math.abs(totalAmount) : totalAmount) + "</td><td></td><td></td></tr>";
+                        totalLiabilities += totalAmount;
+                    }
+                }
+            }
+            balanceSheetContent += "<tr><td style='text-align: left;'>Total Liabilities</td><td></td><td style='text-align: right;'>" +
+            (Math.abs(totalLiabilities)) + "</td><td></td></tr>";
+
+            var capitalTitle = 'Capital';
+            var capitalAccount = ledgerData[capitalTitle];
+            var capitalBeg = 0;
+            if (capitalAccount) {
+                capitalBeg = calculateTotalAmount(capitalAccount.transactions, capitalTitle);
+            }
+            balanceSheetContent += "<tr><td style='text-align: left;'>Capital(Beg)</td><td style='text-align: right;'>" +
+                Math.abs(capitalBeg) + "</td><td></td><td></td></tr>";
+    
+            var netIncome = generateIncomeStatement();
+
+            balanceSheetContent += "<tr><td style='text-align: left;'>Net Income</td><td style='text-align: right;'>" +
+                (Math.abs(netIncome)) + "</td><td></td><td></td></tr>";
+
+            var capitalEnd = capitalBeg + netIncome;
+
+            balanceSheetContent += "<tr><td style='text-align: left;'>Capital(End)</td><td></td><td style='text-align: right;'>" +
+                Math.abs(capitalEnd) + "</td><td></td></tr>";
+
+            balanceSheetContent += "<tr><td style='text-align: left;'><b>Total Liabilities and Capital</b></td><td></td><td></td>" +
+                "<td style='text-align: right;'><b>" + Math.abs((totalLiabilities + capitalEnd)) + "</td></tr>";
+            
+            balanceSheetContent += "</table>";
+            financialStatementsContent.innerHTML += balanceSheetContent;
+        }
+
+        function generateIncomeStatement() {
+            var financialStatementsContent = document.getElementById("financialStatementsContent");
+            var incomeStatementContent = "<h2>Income Statement</h2>";
+            incomeStatementContent += "<table>";
+
+            totalRevenue = 0;
+            totalExpenses = 0;
+
+            incomeStatementContent += "<tr><td style='text-align: left;'>Revenue</td><td></td><td></td><td></td></tr>";
+            for (var i = 0; i < revenueAccounts.length; i++) {
+                var accountTitle = revenueAccounts[i];
+                var accountData = ledgerData[accountTitle];
+
+                if (accountData) {
+                    var totalAmount = calculateTotalAmount(accountData.transactions, accountTitle);
+                    incomeStatementContent += "<tr><td>" + accountTitle + "</td><td style='text-align: right;'>" +
+                        (totalAmount < 0 ? Math.abs(totalAmount) : totalAmount) + "</td><td></td><td></td></tr>";
+                    totalRevenue += totalAmount;
+                }
+            }
+
+            incomeStatementContent += "<tr><td style='text-align: left;'><b>Total Revenue</b></td><td></td>" + 
+                "<td style='text-align: right;'><b>" + (totalRevenue < 0 ? Math.abs(totalRevenue) : totalRevenue) + 
+                "</b></td><td></td></tr>";
+
+            incomeStatementContent += "<tr><td style='text-align: left;'>Expenses</td><td></td><td></td><td></td></tr>";
+            for (var j = 0; j < expenseAccounts.length; j++) {
+                var expenseTitle = expenseAccounts[j];
+                var expenseData = ledgerData[expenseTitle];
+
+                if (expenseData) {
+                    var expenseAmount = calculateTotalAmount(expenseData.transactions, expenseTitle);
+                    incomeStatementContent += "<tr><td>" + expenseTitle + "</td><td style='text-align: right;'>" +
+                        (expenseAmount < 0 ? Math.abs(expenseAmount) : expenseAmount) + "</td><td></td><td></td></tr>";
+                    totalExpenses += expenseAmount;
+                }
+            }
+
+            incomeStatementContent += "<tr><td style='text-align: left;'><b>Total Expenses</b></td><td></td>" + 
+                "<td style='text-align: right;'><b>" + (totalExpenses < 0 ? Math.abs(totalExpenses) : totalExpenses) +
+                "</b></td><td></td></tr>";
+
+            netIncome = totalRevenue + totalExpenses;
+
+            incomeStatementContent += "<tr><td style='text-align: left;'><b>Net Income</b></td><td></td><td></td>" 
+                + "<td style='text-align: right;'><b>" + (Math.abs(netIncome)) + "</b></td></tr>";
+
+            incomeStatementContent += "</table>";
+            financialStatementsContent.innerHTML += incomeStatementContent;
+
+            return netIncome;
+        }
+
+        function showFinancialStatements() {
+            var financialStatementsContent = document.getElementById("financialStatementsContent");
+
+            netIncome = 0;
+            totalRevenue = 0;
+            totalExpenses = 0;
+
+            generateBalanceSheet();
+
+            if (financialStatementsVisible) {
+                document.getElementById("financialstatement").style.display = "none";
+                document.getElementById("journalEntry").style.display = "block";
+                document.getElementById("ledger").style.display = "block";
+                document.getElementById("showFinancialStatementsButton").textContent = "Show Financial Statements";
+            }
+            else {
+                document.getElementById("financialstatement").style.display = "block";
+                document.getElementById("trialbalance").style.display = "none";
+                document.getElementById("journalEntry").style.display = "none";
+                document.getElementById("ledger").style.display = "none";
+                document.getElementById("showFinancialStatementsButton").textContent = "Hide Financial Statements";
+            }
+            financialStatementsVisible = !financialStatementsVisible;
+        }
+    </script>
+</body>
+
+</html>
